@@ -1,62 +1,340 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#000000">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEVOLLO</title>
+
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif}
-body{background:#080808;color:#fff}
-#countdownScreen{position:fixed;inset:0;background:#080808;display:flex;align-items:center;justify-content:center;z-index:10}
-.count-number{font-size:clamp(100px,30vw,240px);font-weight:900;letter-spacing:-8px;animation:pulse .85s ease-in-out infinite alternate}
-.count-label{position:absolute;bottom:13%;font-size:12px;letter-spacing:5px;color:#aaa;text-transform:uppercase}
-@keyframes pulse{from{transform:scale(.94);opacity:.65}to{transform:scale(1.04);opacity:1}}
-#noticeScreen{display:none;min-height:100vh;background:#000;align-items:center;justify-content:center;text-align:center;padding:30px}
-.notice-wrap{max-width:760px;animation:appear .9s ease-out both}
-.brand{font-size:clamp(38px,10vw,76px);font-weight:900;letter-spacing:clamp(5px,2vw,15px);margin:0 0 38px}
-.drop{width:74px;height:74px;margin:0 auto 32px;display:block;filter:drop-shadow(0 0 18px #f0f0f044)}
-.warning{font-size:clamp(20px,5vw,34px);font-weight:800;line-height:1.35;margin:0 auto 18px}
-.sub{font-size:clamp(14px,3.5vw,18px);line-height:1.7;color:#b8b8b8;margin:0}
-.rule{width:80px;height:2px;background:#777;margin:28px auto}
-@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(prefers-reduced-motion:reduce){.count-number{animation:none}.notice-wrap{animation:none}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #171717;
+  background: white;
+}
+
+#store {
+  min-height: 100vh;
+}
+
+.announcement {
+  background: #171717;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+header {
+  padding: 22px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 15px;
+}
+
+.product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 38px;
+}
+
+.photo {
+  min-height: 420px;
+  background: #eeeae5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.photo h2 {
+  font-size: 27px;
+  letter-spacing: 3px;
+}
+
+.details h1 {
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.stars {
+  color: #b28b45;
+  margin: 15px 0;
+}
+
+.price {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.old {
+  color: #888;
+  text-decoration: line-through;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.benefits {
+  display: flex;
+  gap: 8px;
+  margin: 25px 0;
+}
+
+.benefits div {
+  flex: 1;
+  padding: 13px 5px;
+  background: #f6f4f0;
+  text-align: center;
+  font-size: 12px;
+}
+
+.sizes {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0 25px;
+}
+
+.sizes button {
+  padding: 13px 16px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.sizes button:focus {
+  background: #171717;
+  color: white;
+}
+
+.add {
+  width: 100%;
+  padding: 18px;
+  border: 0;
+  background: #171717;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.info {
+  border-top: 1px solid #ddd;
+  padding: 18px 0;
+  margin-top: 22px;
+  line-height: 1.6;
+}
+
+#countdown {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  background: #000;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(120px, 30vw, 240px);
+  font-weight: 900;
+}
+
+#closed {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  background: #000;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+
+.closed-content {
+  max-width: 750px;
+  animation: appear 1s ease;
+}
+
+.closed-logo {
+  font-size: clamp(40px, 10vw, 78px);
+  font-weight: 900;
+  letter-spacing: 8px;
+  margin-bottom: 35px;
+}
+
+.lock {
+  font-size: 65px;
+  margin-bottom: 30px;
+}
+
+.message {
+  font-size: clamp(22px, 5vw, 36px);
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+.submessage {
+  color: #aaa;
+  font-size: 16px;
+  margin-top: 25px;
+  line-height: 1.7;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 700px) {
+  header { padding: 18px; }
+  .product { grid-template-columns: 1fr; gap: 20px; }
+  .photo { min-height: 350px; }
+  .details h1 { font-size: 26px; }
+  main { margin-top: 15px; }
+}
 </style>
 </head>
+
 <body>
-<div id="countdownScreen" aria-live="polite">
-  <div class="count-number" id="count">5</div>
-  <div class="count-label">NEVOLLO</div>
-</div>
-<main id="noticeScreen">
-  <div class="notice-wrap">
-    <h1 class="brand">NEVOLLO</h1>
-    <svg class="drop" viewBox="0 0 100 100" role="img" aria-label="Damla işareti" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 7C40 25 20 45 20 62C20 79 33 92 50 92C67 92 80 79 80 62C80 45 60 25 50 7Z" stroke="white" stroke-width="5"/>
-      <path d="M36 64C37 73 43 78 51 79" stroke="white" stroke-width="4" stroke-linecap="round"/>
-    </svg>
-    <p class="warning">Mert Yıldırım’ı kimse dolandıramaz.</p>
-    <div class="rule"></div>
-    <p class="sub">Site bir süreliğine kapatılmıştır.</p>
+
+<section id="store">
+  <div class="announcement">
+    NEVOLLO • KIŞ KOLEKSİYONU
   </div>
-</main>
+
+  <header>
+    <div class="logo">NEVOLLO</div>
+    <div>🛍️ Sepet</div>
+  </header>
+
+  <main>
+    <div style="font-size:12px;color:#777;margin-bottom:20px">
+      Ana Sayfa / Ürünler / Kış Koleksiyonu
+    </div>
+
+    <section class="product">
+      <div class="photo">
+        <div>
+          <h2>NEVOLLO</h2>
+          <p>Peluş Astarlı Kışlık Eşofman</p>
+          <p>Ürün fotoğrafı alanı</p>
+        </div>
+      </div>
+
+      <div class="details">
+        <div class="stars">★★★★★ <span style="color:#555">Ürün değerlendirmeleri</span></div>
+
+        <h1>Nuvello™ Peluş Astarlı Kışlık Eşofman</h1>
+
+        <p>
+          <span class="price">₺899,90</span>
+          <span class="old">₺1.299,90</span>
+        </p>
+
+        <p style="color:#666;font-size:13px">
+          Kış günleri için yumuşak dokulu, rahat eşofman.
+        </p>
+
+        <div class="benefits">
+          <div>❄️<br><br>Sıcak tutan</div>
+          <div>☁️<br><br>Yumuşak doku</div>
+          <div>✓<br><br>Günlük konfor</div>
+        </div>
+
+        <b>Beden seçimi</b>
+
+        <div class="sizes">
+          <button>S</button>
+          <button>M</button>
+          <button>L</button>
+          <button>XL</button>
+          <button>XXL</button>
+        </div>
+
+        <button class="add" onclick="alert('Bu demo mağazada gerçek sipariş alınmıyor.')">
+          SEPETE EKLE
+        </button>
+
+        <div class="info">
+          <b>Ürün açıklaması</b>
+          <p>Peluş astarlı kışlık eşofman. Kumaş ve ürün ölçülerini kendi ürün bilgilerine göre düzenleyebilirsin.</p>
+        </div>
+
+        <div class="info">
+          <b>Kargo ve teslimat</b>
+          <p>Sipariş ve teslimat bilgileri.</p>
+        </div>
+
+        <div class="info">
+          <b>Sık sorulan sorular</b>
+          <p>Beden ve ürün bilgileri için mağaza açıklamalarını inceleyin.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</section>
+
+<div id="countdown">5</div>
+
+<section id="closed">
+  <div class="closed-content">
+    <div class="closed-logo">NEVOLLO</div>
+
+    <div class="lock">🔒</div>
+
+    <div class="message">
+      Mert Yıldırım’ı kimse dolandıramaz.
+    </div>
+
+    <div class="submessage">
+      Site bir süreliğine kapatılmıştır.
+    </div>
+  </div>
+</section>
+
 <script>
-(function(){
-  let n=5;
-  const counter=document.getElementById('count');
-  const countdown=document.getElementById('countdownScreen');
-  const notice=document.getElementById('noticeScreen');
-  const timer=setInterval(function(){
-    n--;
-    if(n>0){counter.textContent=String(n);}
-    else{
+setTimeout(function() {
+  const store = document.getElementById("store");
+  const countdown = document.getElementById("countdown");
+
+  store.style.display = "none";
+  countdown.style.display = "flex";
+
+  let number = 5;
+  countdown.textContent = number;
+
+  const timer = setInterval(function() {
+    number--;
+
+    if (number > 0) {
+      countdown.textContent = number;
+    } else {
       clearInterval(timer);
-      countdown.style.display='none';
-      notice.style.display='flex';
-      document.body.style.background='#000';
+      countdown.style.display = "none";
+      document.getElementById("closed").style.display = "flex";
     }
-  },1000);
-})();
+  }, 1000);
+}, 0);
 </script>
+
 </body>
 </html>
