@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<title>NEVOLLO</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif}
+body{background:#080808;color:#fff}
+#countdownScreen{position:fixed;inset:0;background:#080808;display:flex;align-items:center;justify-content:center;z-index:10}
+.count-number{font-size:clamp(100px,30vw,240px);font-weight:900;letter-spacing:-8px;animation:pulse .85s ease-in-out infinite alternate}
+.count-label{position:absolute;bottom:13%;font-size:12px;letter-spacing:5px;color:#aaa;text-transform:uppercase}
+@keyframes pulse{from{transform:scale(.94);opacity:.65}to{transform:scale(1.04);opacity:1}}
+#noticeScreen{display:none;min-height:100vh;background:#000;align-items:center;justify-content:center;text-align:center;padding:30px}
+.notice-wrap{max-width:760px;animation:appear .9s ease-out both}
+.brand{font-size:clamp(38px,10vw,76px);font-weight:900;letter-spacing:clamp(5px,2vw,15px);margin:0 0 38px}
+.drop{width:74px;height:74px;margin:0 auto 32px;display:block;filter:drop-shadow(0 0 18px #f0f0f044)}
+.warning{font-size:clamp(20px,5vw,34px);font-weight:800;line-height:1.35;margin:0 auto 18px}
+.sub{font-size:clamp(14px,3.5vw,18px);line-height:1.7;color:#b8b8b8;margin:0}
+.rule{width:80px;height:2px;background:#777;margin:28px auto}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.count-number{animation:none}.notice-wrap{animation:none}}
+</style>
+</head>
+<body>
+<div id="countdownScreen" aria-live="polite">
+  <div class="count-number" id="count">5</div>
+  <div class="count-label">NEVOLLO</div>
+</div>
+<main id="noticeScreen">
+  <div class="notice-wrap">
+    <h1 class="brand">NEVOLLO</h1>
+    <svg class="drop" viewBox="0 0 100 100" role="img" aria-label="Damla işareti" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 7C40 25 20 45 20 62C20 79 33 92 50 92C67 92 80 79 80 62C80 45 60 25 50 7Z" stroke="white" stroke-width="5"/>
+      <path d="M36 64C37 73 43 78 51 79" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <p class="warning">Mert Yıldırım’ı kimse dolandıramaz.</p>
+    <div class="rule"></div>
+    <p class="sub">Site bir süreliğine kapatılmıştır.</p>
+  </div>
+</main>
+<script>
+(function(){
+  let n=5;
+  const counter=document.getElementById('count');
+  const countdown=document.getElementById('countdownScreen');
+  const notice=document.getElementById('noticeScreen');
+  const timer=setInterval(function(){
+    n--;
+    if(n>0){counter.textContent=String(n);}
+    else{
+      clearInterval(timer);
+      countdown.style.display='none';
+      notice.style.display='flex';
+      document.body.style.background='#000';
+    }
+  },1000);
+})();
+</script>
+</body>
+</html>
